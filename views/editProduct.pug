@@ -1,0 +1,29 @@
+extends layout
+
+include mixins/_productForm
+
+block prepend styles
+    link(rel='stylesheet', href='/dist/libs/tiny-slider.css')
+
+block content
+
+    .site-width
+        if product
+            h1 #{product.code}
+            .product-actions
+                button#delete-product Delete this Product
+                ul.button-actions
+                    li
+                        h4 Are you sure you want to delete this product?
+                    li
+                        a.btn-solid--delete(href=`/product/${product._id}/delete`) Yes
+                    li
+                        button#no-delete No
+        else
+            h1 Add Product
+
+        +productForm(product)
+
+block append scripts
+    script(src="/dist/libs/tiny-slider.js")
+    script(src="/javascripts/pages/editProduct.js")

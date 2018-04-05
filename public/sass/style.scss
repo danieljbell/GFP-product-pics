@@ -1,0 +1,24 @@
+$brand: #29652d;
+$brand-two: #bdd341;
+$black: #444;
+$medium-gray: #ccc;
+$light-gray: #f0f0f0;
+
+@import 
+    'base/reset',
+    'base/typography',
+    'base/grid',
+    'base/buttons';
+
+@import 
+    'module/site-header',
+    'module/flashes',
+    'module/product-list',
+    'module/productForm',
+    'module/modal',
+    'module/display-modal-image';
+
+@import
+    'pages/editProduct',
+    'pages/singleProduct',
+    'pages/searchProducts';

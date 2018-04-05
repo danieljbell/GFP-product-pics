@@ -1,0 +1,90 @@
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 2rem;
+    list-style-type: none;
+}
+
+.card--product {
+    border: 1px solid $medium-gray;
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px -4px rgba(black, 0.1);
+    max-width: 300px;
+}
+
+.card--product h4 {
+    background-color: $light-gray;
+    padding: 0.25em 0.5em;
+    text-transform: uppercase;
+    border-top-left-radius: 5px; 
+    border-top-right-radius: 5px;
+    
+    a {
+        color: $black;
+        text-decoration: none;
+    }
+
+}
+
+.card--image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 150px;
+    position: relative;
+    box-shadow: inset 0 0 80px rgba(black, 0.3);
+
+    a {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+}
+
+.card--actions {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0.5rem 0 1rem;
+}
+
+.card--actions .view-product,
+.card--actions .edit-product {
+    font-size: 0.7rem;
+    text-decoration: none;
+    border-radius: 3px;
+    padding: 0.25em 0.5em;
+    transition: all 200ms ease-in-out;
+}
+
+.card--actions .view-product {
+    background-color: $brand;
+    border: 2px solid $brand;
+    color: #fff;
+    margin-right: 1em;
+    
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: lighten($brand, 15%);
+        border-color: lighten($brand, 15%);
+    }
+
+}
+
+.card--actions .edit-product {
+    background-image: unset;
+    border: 2px solid $brand-two;
+    color: $brand-two;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $brand-two;
+        color: #fff;
+    }
+
+}

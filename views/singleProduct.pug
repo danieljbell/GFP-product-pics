@@ -1,0 +1,48 @@
+extends layout
+
+block prepend styles
+    link(rel='stylesheet', href='/dist/libs/tiny-slider.css')
+
+block content
+
+    .site-width
+
+        h1 #{product.code}
+        a.edit-product(href=`/product/${product._id}/edit`) Edit Product
+        a(href=`${product.download_zip}`) Download All Images
+
+        //- img(src=`${product.product_image}`, alt="")
+
+        - const images = product.product_image || []
+
+        .strip
+
+            each image, index in images
+                .modal-image(data-index=`${index}`)
+                    img.individual-image(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/l_overlay/v1522413167/${image}.jpg`, alt="")
+                    ul.photo-actions
+                        li
+                            button.view-photo(data-id=`${image}`)
+                                img(src="/images/icons/search.svg", alt="Zoom Photo") 
+                                span Zoom
+                        li
+                            a.download-photo(href=`https://res.cloudinary.com/dpkuo9jjc/image/upload/l_overlay/v1522413167/${image}.jpg` download)
+                                img(src="/images/icons/download.svg", alt="")
+                                span Download
+
+        pre= h.dump(product)
+
+        //- each product_image in product
+        //-     p #{product_image}
+
+block modals
+  .modal
+    .modal--close
+      button.close-modal +
+    .modal--body(tabindex="0")
+        each image in images
+            img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/${image}.jpg`)
+
+block append scripts
+    script(src="/dist/libs/tiny-slider.js")
+    script(src="/javascripts/pages/singleProduct.js")

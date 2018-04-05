@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    title= `${title} | GFP Photos` 
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+
+    block styles
+      link(rel='stylesheet', href='/dist/style.css')
+        
+  body(class=`${bodyClass || ''}`)
+
+    div(id=`${vueID || ''}`)
+    
+      block messages
+        if locals.flashes
+          .flash-messages
+            - const categories = Object.keys(locals.flashes)
+            each category in categories
+              each message in flashes[category]
+                .flash(class=`flash--${category}`)
+                  p.flash--text!= message
+                  button.flash--remove(onClick="this.parentElement.remove()")
+                    != h.icon('close')
+
+      block header
+        header.site-header
+          .site-width
+            a(href="/")
+              h1 GFP Product Photos
+            nav
+              ul
+                li
+                  form(action="/search" method="GET")
+                    input(type="search" name="q" placeholder="Search for product" v-model="keyword" v-on:keyup="productLookup")
+                li
+                  a(href="/add") Add Product
+          //- .search-results
+          //-   li {{keyword}}
+
+      block content
+
+      block modals
+        .modal
+          .modal--close
+            button.close-modal +
+          .modal--body
+
+    block scripts
+      script(src="/dist/App.bundle.js")

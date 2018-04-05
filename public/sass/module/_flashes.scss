@@ -1,0 +1,56 @@
+.flash-messages {
+    position: fixed;
+    z-index: 999;
+    left: 2rem;
+    bottom: 2rem;
+}
+
+.flash {
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 0.85em;
+    display: flex;
+}
+
+.flash--success {
+    background-color: lighten($brand-two, 30%);
+    border: 5px solid $brand-two;
+
+    .flash--remove {
+        background-color: $brand-two;
+    }
+
+}
+
+.flash--error {
+    background-color: lighten(red, 30%);
+    border: 5px solid red;
+    
+    .flash--remove {
+        background-color: red;
+    }
+
+}
+
+.flash--remove {
+    border: 0;
+    font-size: 1rem;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 1rem;
+    padding: 0;
+    
+    svg {
+        max-width: 50%;
+        max-height: 50%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    path {
+        fill: #fff;
+    }
+
+}

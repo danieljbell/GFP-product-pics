@@ -1,0 +1,10 @@
+mixin productCard(product = {})
+    li.card--product
+            h4 
+                a(href=`/product/${product.slug}`) #{product.code}
+            .card--image(style=`background-image: url(https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/${product.product_image[0]});`)
+                a(href=`/product/${product.slug}`)
+            ul.card--actions
+                li
+                    a.view-product(href=`/product/${product.slug}`) View Product
+                    a.edit-product(href=`/product/${product._id}/edit`) Edit Product

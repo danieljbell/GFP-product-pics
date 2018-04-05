@@ -1,0 +1,27 @@
+extends layout
+
+include mixins/_productCard
+
+block content
+    
+    .site-width
+        
+        h1 Search for: #{query}
+
+        #v-refine-products
+            .refinement-controls
+                input(type="text" id="refine" placeholder="Refine your search" v-model="keyword")
+
+            ul.product-list
+                li(v-for="item in filteredList").card--product
+                    h4 
+                        a(v-bind:href="'/product/' + item.slug") {{item.code}}
+                    .card--image(v-bind:style="'background-image: url(https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/' + item.product_image[0] + '.jpg)'")
+                        a(v-bind:href="'/product/' + item.slug")
+                    ul.card--actions
+                        li
+                            a.view-product(v-bind:href="'/product/' + item.slug") View Product
+                            a.edit-product(v-bind:href="'/product/' + item._id + '/edit'") Edit Product
+
+block prepend scripts
+    script(src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js")

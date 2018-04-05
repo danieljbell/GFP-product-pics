@@ -1,0 +1,110 @@
+.modal-open:after {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    content: '';
+    opacity: 0.6;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    min-width: 50vw;
+}
+
+.modal--close {
+    text-align: right;
+    margin-bottom: 0.5rem;
+}
+
+.close-modal {
+    border: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    line-height: 1rem;
+    padding: 0;
+    font-weight: bold;
+    transform: rotate(45deg);
+    &:active {
+        outline: none;
+    }
+}
+
+.modal--body {
+    box-shadow: -1px 9px 16px rgba(black, 0.5);
+}
+
+.modal-open .modal {
+    display: block;
+}
+
+.modal--body img {
+    display: block;
+    width: 100%;
+}
+
+.modal .tns-outer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal .tns-nav {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    
+    button {
+        border: 0;
+        width: 10px;
+        height: 10px;
+        padding: 0;
+        margin-right: 0.5rem;
+        background-color: rgba(white, 0.25);
+        transition: all 200ms ease-in-out;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &.tns-nav-active {
+            background-color: #fff;
+        }
+
+    }
+
+}
+
+.modal .tns-controls {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+
+    button {
+        border-radius: 50%;
+        border: 0;
+    }
+
+    button[data-controls="prev"] {
+        position: absolute;
+        right: calc(100% + 1rem);
+    }
+
+    button[data-controls="next"] {
+        position: absolute;
+        left: calc(100% + 1rem);
+    }
+
+}

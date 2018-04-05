@@ -1,0 +1,77 @@
+@mixin button() {
+    padding: 0.25em 0.75em;
+    border-radius: 7px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 250ms ease-in-out;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+}
+
+@mixin solidButton($bgc, $c: #fff, $hover: 'lighten') {
+    @include button();
+    background-color: $bgc;
+    color: $c;
+    &:hover {
+        text-decoration: none;
+        @if $hover == lighten {
+            background-color: lighten($bgc, 15%);
+        } @else {
+            color: lighten($c, 75%);
+            background-color: darken($bgc, 15%);
+        }
+    }
+}
+
+@mixin outlineButton($c: #fff, $hover-color: #fff) {
+    @include button();
+    border: 4px solid $c;
+    color: $c;
+    &:hover {
+        text-decoration: none;
+        color: $hover-color;
+        background-color: $c;
+    }
+}
+
+
+/*
+====================
+SOLID BUTTONS
+====================
+*/
+.btn-solid--brand {
+    @include solidButton($brand);
+}
+
+.btn-solid--brand-two {
+    @include solidButton($brand-two, $brand, 'darken');
+}
+
+.btn-solid--white {
+    @include solidButton(#fff, $black);
+}
+
+.btn-solid--delete {
+    @include solidButton(#ff0000);
+}
+
+
+/*
+====================
+OUTLINE BUTTONS
+====================
+*/
+.btn-outline--brand {
+    @include outlineButton($brand);
+}
+
+.btn-outline--brand-two {
+    @include outlineButton($brand-two);
+}
+
+.btn-outline--white {
+    @include outlineButton(#fff, $black);
+}

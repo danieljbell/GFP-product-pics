@@ -1,0 +1,22 @@
+extends layout
+
+include mixins/_productCard
+
+block content
+
+    .site-width
+
+        if currentPath.startsWith('/search')
+            h2 Search for: #{query}
+
+        if products.length > 0
+        
+            ul.product-list
+                each product in products
+                    +productCard(product)
+
+        else
+
+            h2 No Products have been created!
+            p Create the first product 
+                a(href="/add") here
