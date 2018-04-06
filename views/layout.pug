@@ -26,7 +26,10 @@ html
         header.site-header
           .site-width
             a(href="/")
-              h1 GFP Product Photos
+              if !user
+                h1 GFP Product Photos
+              else
+                h1 GFP Product Photos #{user.first_name}
             nav
               ul
                 li
@@ -34,8 +37,8 @@ html
                     input(type="search" name="q" placeholder="Search for product" v-model="keyword" v-on:keyup="productLookup")
                 li
                   a(href="/add") Add Product
-          //- .search-results
-          //-   li {{keyword}}
+                li
+                  a(href="/user/new") Add User  
 
       block content
 

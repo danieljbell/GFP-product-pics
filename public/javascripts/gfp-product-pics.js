@@ -22,7 +22,7 @@ if ($('#v-refine-products')) {
       computed: {
         filteredList() {
             return this.items.filter((product) => {
-                return product.slug.includes(this.keyword.toLowerCase());
+                return product.code.includes(this.keyword.toLowerCase());
             })
         }
       }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+    meta(charset="UTF-8")
+    title Login
+body
+    h1 you need to login
+    
+    form(action="/login" method="POST")
+        div.form-group
+          label(for="email") Email Address
+          input(type="email" name="email" id="email")
+        div.form-group
+          label(for="password") Password
+          input(type="password" name="password" id="password")
+        input(type="submit" value="Log In")
+    
+    img(src="/images/login-bg.jpg", alt="")

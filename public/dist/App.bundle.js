@@ -1784,7 +1784,7 @@ if ((0, _bling.$)('#v-refine-products')) {
         var _this2 = this;
 
         return this.items.filter(function (product) {
-          return product.slug.includes(_this2.keyword.toLowerCase());
+          return product.code.includes(_this2.keyword.toLowerCase());
         });
       }
     }

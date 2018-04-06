@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h2= title
+  form(action="/register" method="POST")
+    .form-group
+      label(for="first_name") First Name
+      input(type="text" name="first_name" id="first_name")
+    .form-group
+      label(for="last_name") Last Name
+      input(type="text" name="last_name" id="last_name")
+    .form-group
+      label(for="email") Email Address
+      input(type="email" name="email" id="email")
+    .form-group
+      label(for="password") Password
+      input(type="password" name="password" id="password")
+    .form-group
+      label(for="password-confirm") Confirm Password
+      input(type="password" name="password-confirm" id="password-confirm")
+    input(type="submit" value="Register")

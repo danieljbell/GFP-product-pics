@@ -2,29 +2,57 @@ const express = require('express');
 const router = express.Router();
 
 const productController = require('../controllers/productController');
+const userController = require('../controllers/userController');
+const authController = require('../controllers/authController');
 const { catchErrors } = require('../handlers/errorHandlers.js');
 
 // HOMEPAGE
-router.get('/', catchErrors(productController.getProducts));
+router.get('/', 
+    authController.checkAuth,
+    catchErrors(productController.getProducts)
+);
 
 // ADDING NEW PRODUCTS
-router.get('/add', productController.newProduct);
-router.post('/add', catchErrors(productController.createProduct));
+router.get('/add', 
+    authController.checkAuth,
+    productController.newProduct
+);
+router.post('/add', 
+    catchErrors(productController.createProduct)
+);
 
 // EDITING, UPDATING AND DELETING SINGLE PRODUCTS
-router.get('/product/:id/edit', catchErrors(productController.editProduct));
-router.post('/add/:id', catchErrors(productController.updateProduct));
-router.get('/product/:id/delete', catchErrors(productController.deleteProduct));
+router.get('/product/:id/edit', 
+    catchErrors(productController.editProduct)
+);
+router.post('/add/:id', 
+    catchErrors(productController.updateProduct)
+);
+router.get('/product/:id/delete', 
+    catchErrors(productController.deleteProduct)
+);
 
 // VIEWING SINGLE PRODUCT
-router.get('/product/:slug', catchErrors(productController.getProductBySlug));
-
-// router.get('/search', productController.searchProducts);
-
-
-router.get('/search', catchErrors(productController.searchProducts));
+router.get('/product/:slug', 
+    catchErrors(productController.getProductBySlug)
+);
 
 
+router.get('/search', 
+    catchErrors(productController.searchProducts)
+);
+
+
+// USERS
+// router.get('/user/new', userController.newUser);
+// router.post('/user/new', 
+//     userController.validateRegister,
+//     userController.register
+// );
+
+router.get('/login', authController.loginScreen);
+router.post('/login', authController.login);
+router.get('/logout', authController.logout);
 
 
 
