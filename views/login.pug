@@ -4,6 +4,20 @@ head
     meta(charset="UTF-8")
     title Login
 body
+  
+  block messages
+    if locals.flashes
+      .flash-messages
+        - const categories = Object.keys(locals.flashes)
+        each category in categories
+          each message in flashes[category]
+            .flash(class=`flash--${category}`)
+              p.flash--text!= message
+              button.flash--remove(onClick="this.parentElement.remove()")
+                != h.icon('close')
+
+  block content
+
     h1 you need to login
     
     form(action="/login" method="POST")

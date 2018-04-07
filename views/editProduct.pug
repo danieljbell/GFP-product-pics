@@ -21,6 +21,7 @@ block content
                         button#no-delete No
         else
             h1 Add Product
+            pre= h.dump(user)
 
         +productForm(product)
 

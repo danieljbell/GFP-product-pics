@@ -26,10 +26,7 @@ html
         header.site-header
           .site-width
             a(href="/")
-              if !user
-                h1 GFP Product Photos
-              else
-                h1 GFP Product Photos #{user.first_name}
+              h1 GFP Product Photos
             nav
               ul
                 li
@@ -39,6 +36,8 @@ html
                   a(href="/add") Add Product
                 li
                   a(href="/user/new") Add User  
+                li
+                  a(href="/logout") Logout
 
       block content
 

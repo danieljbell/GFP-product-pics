@@ -14,7 +14,7 @@ exports.loginScreen = (req, res) => {
       title: 'Login!'
     });
   } else {
-    res.redirect('/recipes');
+    res.redirect('/');
   }
 };
 

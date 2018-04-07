@@ -17,10 +17,10 @@ exports.homePage = (req, res) => {
 };
 
 exports.newProduct = (req, res) => {
-    res.render('editProduct', { 
-      title: 'Add Product',
-      bodyClass: 'edit-product'
-     });
+  res.render('editProduct', { 
+    title: 'Add Product',
+    bodyClass: 'edit-product'
+  });
 };
 
 exports.createProduct = async (req, res) => {
@@ -66,6 +66,7 @@ exports.createProduct = async (req, res) => {
     
     const product = new Product({
         code: req.body.code,
+        creator: req.user._id,
         product_image: upload,
         download_zip: zip.secure_url
     });
@@ -107,7 +108,7 @@ exports.updateProduct = async (req, res) => {
 }
 
 exports.getProductBySlug = async (req, res, next) => {
-    const product = await Product.findOne({ slug: req.params.slug });
+    const product = await Product.findOne({ slug: req.params.slug }).populate('creator');
     if (!product) {
         return next(); 
     }

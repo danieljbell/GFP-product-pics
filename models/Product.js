@@ -26,6 +26,11 @@ const productSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
+    creator: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: 'You have to be logged in'
+    },
     product_image: [String],
     download_zip: String
 });
