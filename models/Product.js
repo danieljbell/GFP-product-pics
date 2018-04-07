@@ -21,6 +21,11 @@ const productSchema = new mongoose.Schema({
         required: 'Please enter a product code'
     },
     slug: String,
+    created_at: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
     product_image: [String],
     download_zip: String
 });

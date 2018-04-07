@@ -60,7 +60,8 @@ exports.createProduct = async (req, res) => {
 
     const zip = await cloudinary.v2.uploader.create_zip({
       tags: req.body.code,
-      target_public_id: req.body.code
+      target_public_id: req.body.code,
+      target_tags: req.body.code
     }, function(error, result) {});
     
     const product = new Product({
@@ -121,10 +122,17 @@ exports.getProductBySlug = async (req, res, next) => {
 exports.deleteProduct = async (req, res) => {
   const product = await Product.findOne({ _id: req.params.id });
   const images = product.product_image;
+  const zip = `${product.code}.zip`;
+  console.log();
   images.forEach(function(img) {
     cloudinary.uploader.destroy(img, function(error, result) {
       console.log(error);
     });
+  });
+  cloudinary.v2.uploader.destroy(`${product.code}.zip`, {
+    resource_type: 'raw'
+  }, function(error, result) {
+    console.log(error);
   });
   await product.remove();
   req.flash('success', `${product.code} has been deleted`);
