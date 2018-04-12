@@ -6,17 +6,20 @@ block prepend styles
 block content
 
     .site-width
+        - const formattedCode = product.code.toUpperCase();
 
-        h1 #{product.code}
+        h1 #{formattedCode}
         
-        p Created by: #{product.creator.first_name} #{product.creator.last_name}
-
-        p Created on: #{product.created_at}
+        if product.creator
+            p Created by: #{product.creator.first_name} #{product.creator.last_name}
+            img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
+        
+        if product.created_at
+            p Created #{h.moment(product.created_at).fromNow()}
 
         a.edit-product(href=`/product/${product._id}/edit`) Edit Product
-        a(href=`${product.download_zip}`) Download All Images
-
-        //- img(src=`${product.product_image}`, alt="")
+        button.download-product Download All Images
+        //- a(href=`${product.download_zip}`) Download All Images
 
         - const images = product.product_image || []
 
@@ -35,10 +38,6 @@ block content
                                 img(src="/images/icons/download.svg", alt="")
                                 span Download
 
-        pre= h.dump(product)
-
-        //- each product_image in product
-        //-     p #{product_image}
 
 block modals
   .modal

@@ -24,6 +24,19 @@ body {
   max-width: 1080px;
   margin: 0 auto; }
 
+input {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-size: 1rem; }
+
+input[type="submit"] {
+  padding: 0.25em 0.75em;
+  background-color: #bdd341;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  margin: 0 auto;
+  display: block; }
+
 /*
 ====================
 SOLID BUTTONS
@@ -153,7 +166,9 @@ OUTLINE BUTTONS
 .site-header {
   background-color: #f0f0f0;
   border-bottom: 1px solid #ccc;
-  margin-bottom: 2rem; }
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 10; }
 
 .site-header .site-width {
   display: -ms-flexbox;
@@ -163,22 +178,35 @@ OUTLINE BUTTONS
   -ms-flex-align: center;
       align-items: center; }
 
+.site-logo {
+  width: 100%;
+  max-width: 185px; }
+
 .site-header img {
   display: block; }
 
 .site-header nav ul {
   list-style-type: none; }
 
+.site-header nav > ul {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center; }
+
 .site-header nav li {
   display: inline-block;
-  margin-right: 1rem; }
+  margin-right: 1rem;
+  position: relative;
+  z-index: 1; }
   .site-header nav li:last-child {
     margin-right: 0; }
 
 .site-header nav a {
   display: block;
   padding: 1rem 0;
-  text-decoration: none; }
+  text-decoration: none;
+  color: #444; }
 
 .site-header input[type="search"] {
   border: 0;
@@ -186,15 +214,39 @@ OUTLINE BUTTONS
   padding: 0.5rem;
   background-color: #ccc; }
 
-.site-header .search-results {
+.sub-menu-button button {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem; }
+
+.sub-menu {
+  display: none;
   position: absolute;
+  top: 2.3rem;
   left: 0;
   right: 0;
-  z-index: 100;
-  max-width: 1080px;
-  margin: 0 auto;
-  background-color: #fff;
-  padding: 1rem 0; }
+  min-width: 100px;
+  background-color: white;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.5);
+  padding: 1em;
+  z-index: -2; }
+  .sub-menu-button:hover .sub-menu {
+    display: block; }
+
+.site-header--profile-pic {
+  border-radius: 50%;
+  max-width: 50px; }
+
+.site-footer {
+  margin-top: 3rem;
+  padding: 2rem 0;
+  border-top: 1px solid #ccc;
+  font-size: 0.7rem;
+  line-height: 1; }
+
+.footer-logo {
+  width: 100%;
+  max-width: 125px; }
 
 .flash-messages {
   position: fixed;
@@ -330,7 +382,8 @@ OUTLINE BUTTONS
   left: 0;
   background-color: #000;
   content: '';
-  opacity: 0.6; }
+  opacity: 0.6;
+  z-index: 100; }
 
 .modal {
   display: none;
@@ -339,7 +392,7 @@ OUTLINE BUTTONS
   left: 50%;
   -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
-  z-index: 100;
+  z-index: 101;
   min-width: 50vw; }
 
 .modal--close {
@@ -541,5 +594,67 @@ OUTLINE BUTTONS
   display: grid;
   -ms-grid-columns: 200px 1fr;
       grid-template-columns: 200px 1fr; }
+
+.login-screen {
+  position: relative;
+  min-height: 100vh; }
+  .login-screen:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.95) 35%, rgba(255, 255, 255, 0)); }
+
+.login-bg-image {
+  max-width: 100%;
+  object-fit: none;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1; }
+
+.login-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2rem 3rem;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 10px 10px 20px -10px rgba(0, 0, 0, 0.3); }
+  .login-form label {
+    display: block;
+    font-size: 0.9rem; }
+  .login-form input[type="email"],
+  .login-form input[type="password"] {
+    width: 100%;
+    padding: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 0.75rem; }
+
+.login-logo {
+  margin-bottom: 1rem; }
+
+.edit-profile-form {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 250px;
+      grid-template-columns: 1fr 250px; }
+
+.profile-pic img {
+  border-radius: 50%; }
 
 /*# sourceMappingURL=style.css.map*/

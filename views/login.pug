@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-html(lang="en")
-head
-    meta(charset="UTF-8")
-    title Login
-body
+include mixins/_head
+
++head()
+
+body(class=`${bodyClass || ''}`)
   
   block messages
     if locals.flashes
@@ -17,10 +16,9 @@ body
                 != h.icon('close')
 
   block content
-
-    h1 you need to login
     
-    form(action="/login" method="POST")
+    form(action="/login" method="POST" class="login-form")
+        img(src="/images/gfp-logo.svg", alt="GreenFarmParts" class="login-logo")
         div.form-group
           label(for="email") Email Address
           input(type="email" name="email" id="email")
@@ -29,4 +27,4 @@ body
           input(type="password" name="password" id="password")
         input(type="submit" value="Log In")
     
-    img(src="/images/login-bg.jpg", alt="")
+    img(src="/images/login-bg.jpg", alt="" class="login-bg-image")

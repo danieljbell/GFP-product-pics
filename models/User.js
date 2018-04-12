@@ -24,6 +24,13 @@ const userSchema = new Schema({
     type: String,
     required: 'Please enter your last name',
     trim: true
+  },
+  phone_number: {
+    type: String,
+    trim: true
+  },
+  profile_photo: {
+    type: String
   }
 });
 

@@ -11,7 +11,8 @@ exports.checkAuth = (req, res, next) => {
 exports.loginScreen = (req, res) => {
   if (!req.isAuthenticated()) {
     res.render('login', {
-      title: 'Login!'
+      title: 'Login!',
+      bodyClass: 'login-screen'
     });
   } else {
     res.redirect('/');

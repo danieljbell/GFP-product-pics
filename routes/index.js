@@ -44,11 +44,23 @@ router.get('/search',
 
 
 // USERS
-// router.get('/user/new', userController.newUser);
-// router.post('/user/new', 
-//     userController.validateRegister,
-//     userController.register
-// );
+router.get('/user/new', 
+    userController.newUser
+);
+router.post('/user/new',
+    userController.upload,
+    catchErrors(userController.resize),
+    userController.validateRegister,
+    catchErrors(userController.register)
+);
+
+router.get('/profile', 
+    catchErrors(userController.getUser)
+);
+router.post('/profile', 
+    userController.validateRegister,
+    userController.register
+);
 
 router.get('/login', authController.loginScreen);
 router.post('/login', authController.login);

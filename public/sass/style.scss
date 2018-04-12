@@ -8,10 +8,12 @@ $light-gray: #f0f0f0;
     'base/reset',
     'base/typography',
     'base/grid',
+    'base/inputs',
     'base/buttons';
 
 @import 
     'module/site-header',
+    'module/site-footer',
     'module/flashes',
     'module/product-list',
     'module/productForm',
@@ -21,4 +23,6 @@ $light-gray: #f0f0f0;
 @import
     'pages/editProduct',
     'pages/singleProduct',
-    'pages/searchProducts';
+    'pages/searchProducts',
+    'pages/login',
+    'pages/editProfile';

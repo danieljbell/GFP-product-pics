@@ -2,12 +2,19 @@
     background-color: $light-gray;
     border-bottom: 1px solid $medium-gray;
     margin-bottom: 2rem;
+    position: relative;
+    z-index: 10;
 }
 
 .site-header .site-width {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.site-logo {
+    width: 100%;
+    max-width: 185px;
 }
 
 .site-header img {
@@ -18,9 +25,16 @@
     list-style-type: none;
 }
 
+.site-header nav > ul {
+    display: flex;
+    align-items: center;
+}
+
 .site-header nav li {
     display: inline-block;
     margin-right: 1rem;
+    position: relative;
+    z-index: 1;
     &:last-child {
         margin-right: 0;
     }
@@ -30,6 +44,7 @@
     display: block;
     padding: 1rem 0;
     text-decoration: none;
+    color: $black;
 }
 
 .site-header input[type="search"] {
@@ -39,13 +54,29 @@
     background-color: $medium-gray;
 }
 
-.site-header .search-results {
+.sub-menu-button button {
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+}
+
+.sub-menu {
+    display: none;
     position: absolute;
+    top: 2.3rem;
     left: 0;
     right: 0;
-    z-index: 100;
-    max-width: 1080px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 1rem 0;
+    min-width: 100px;
+    background-color: white;
+    box-shadow: 0 5px 20px -10px rgba(0,0,0,0.5);
+    padding: 1em;
+    z-index: -2;
+    .sub-menu-button:hover & {
+        display: block;
+    }
+}
+
+.site-header--profile-pic {
+    border-radius: 50%;
+    max-width: 50px;
 }
