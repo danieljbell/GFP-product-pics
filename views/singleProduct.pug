@@ -11,7 +11,8 @@ block content
         h1 #{formattedCode}
         
         if product.creator
-            p Created by: #{product.creator.first_name} #{product.creator.last_name}
+            p Created by: 
+                a(href=`/profile/${product.creator.first_name.toLowerCase()}-${product.creator.last_name.toLowerCase()}`) #{product.creator.first_name} #{product.creator.last_name}
             img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
         
         if product.created_at

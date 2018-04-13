@@ -108,13 +108,28 @@ exports.register = async (req, res, next) => {
 };
 
 exports.getUser = async (req, res) => {
-  const products = await Product.find({ creator: req.user._id });
-    if (!products) {
-        return next(); 
-    }
+  const reqUser = req.params.user;
+
+  let reqUserFirst = reqUser.split('-')[0];
+  let reqUserLast = reqUser.split('-')[1];
+
+  reqUserFirst = reqUserFirst.charAt(0).toUpperCase() + reqUserFirst.substring(1);
+  reqUserLast = reqUserLast.charAt(0).toUpperCase() + reqUserLast.substring(1);
+
+  const prettyName = `${reqUserFirst} ${reqUserLast}`;
+
+  const displayUser = await User.findOne({ first_name: reqUserFirst, last_name: reqUserLast });
+
+  const products = await Product.find({ creator: displayUser._id });
+  if (!products) {
+      return next(); 
+  }
 
   res.render('profile/displayProfile', {
     title: 'user profile',
+    reqUser,
+    displayUser,
+    prettyName,
     products
   }
   );

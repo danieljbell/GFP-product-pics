@@ -34,7 +34,7 @@ exports.createProduct = async (req, res) => {
             let filePath = filePaths[i];
             await cloudinary.v2.uploader.upload(filePath, {
               tags: req.body.code,
-              public_id: `${req.body.slug}-${i}`
+              public_id: `${req.body.code}-${i}`
             }, (error, result) => {
 
                 if(upload_res.length === upload_len) {

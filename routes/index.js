@@ -54,7 +54,7 @@ router.post('/user/new',
     catchErrors(userController.register)
 );
 
-router.get('/profile', 
+router.get('/profile/:user', 
     catchErrors(userController.getUser)
 );
 router.post('/profile', 
