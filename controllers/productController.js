@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
-const Heroku = require('heroku-client')
-const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN })
+// const Heroku = require('heroku-client')
+// const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN })
 
-const herokuApp = heroku.apps('gfp-product-pics');
-herokuApp.domains().list(function (err, domains) {
-  console.log(err);
-  console.log(domains);
-});
+// const herokuApp = heroku.apps('gfp-product-pics');
+// herokuApp.domains().list(function (err, domains) {
+//   console.log(err);
+//   console.log(domains);
+// });
 
 const cloudinary = require('cloudinary');
 const mailgun = require('mailgun-js')({
