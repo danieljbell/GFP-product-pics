@@ -539,6 +539,13 @@ OUTLINE BUTTONS
   .edit-product .strip img {
     display: block; }
 
+.delete-open {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
 .delete-open:after {
   position: absolute;
   top: 0;
@@ -588,6 +595,26 @@ OUTLINE BUTTONS
   .single-product .strip img {
     display: block; }
 
+.download-open {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.download-open:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  content: '';
+  opacity: 0.4; }
+
+.confirm-download + .button-actions {
+  display: block; }
+
 #v-refine-products {
   padding-top: 2rem;
   display: -ms-grid;
@@ -609,9 +636,9 @@ OUTLINE BUTTONS
     background-image: radial-gradient(rgba(255, 255, 255, 0.95) 35%, rgba(255, 255, 255, 0)); }
 
 .login-bg-image {
-  max-width: 100%;
-  object-fit: none;
+  object-fit: cover;
   min-height: 100vh;
+  min-width: 100vw;
   position: fixed;
   top: 0;
   left: 0;

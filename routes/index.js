@@ -36,6 +36,9 @@ router.get('/product/:id/delete',
 router.get('/product/:slug', 
     catchErrors(productController.getProductBySlug)
 );
+router.post('/product/:id/download', 
+    catchErrors(productController.downloadImages)
+);
 
 
 router.get('/search', 

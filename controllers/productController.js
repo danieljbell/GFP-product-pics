@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
 const cloudinary = require('cloudinary');
+const mailgun = require('mailgun-js')({
+  apiKey: process.env.MAILGUN_API_KEY,
+  domain: process.env.MAILGUN_DOMAIN
+});
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME, 
@@ -11,8 +15,8 @@ cloudinary.config({
 
 exports.homePage = (req, res) => {
     res.render('index', {
-      bodyClass: 'list-all-products'
-    }
+        bodyClass: 'list-all-products'
+      }
     );
 };
 
@@ -73,12 +77,25 @@ exports.createProduct = async (req, res) => {
 
     await product.save();
 
+    const emailData = {
+      from: "GFP Product Pics <dbell@rfemail.com>",
+      to: "djbell70@gmail.com",
+      subject: "A New Product Has Been Added",
+      html: `${product.code} has been added to the site. <a href="/product/${product.slug}">View Product</a>`
+    }
+
+    mailgun.messages().send(emailData, function(error, body) {
+      console.log(error);
+      console.log(body);
+    });
+
     req.flash('success', `Successfully Added Product: ${product.code}!`);
     res.redirect(`/product/${product.slug}`);
 
 };
 
 exports.getProducts = async (req, res) => {
+  console.log(req.socket.server);
     const products = await Product.find();
     res.render('listProducts', {
         title: 'All Products',
@@ -160,6 +177,10 @@ exports.findProducts = async (req, res) => {
   const regex = new RegExp(escapeRegex(req.query.q), 'gi');
   const products = await Product.find({ "code": regex });
   res.send(products);
+}
+
+exports.downloadImages = async (req, res) => {
+  res.send(req.body);
 }
 
 

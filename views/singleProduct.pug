@@ -13,14 +13,23 @@ block content
         if product.creator
             p Created by: 
                 a(href=`/profile/${product.creator.first_name.toLowerCase()}-${product.creator.last_name.toLowerCase()}`) #{product.creator.first_name} #{product.creator.last_name}
-            img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
+            img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_65,h_65,c_fill/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
         
         if product.created_at
             p Created #{h.moment(product.created_at).fromNow()}
 
         a.edit-product(href=`/product/${product._id}/edit`) Edit Product
         button.download-product Download All Images
-        //- a(href=`${product.download_zip}`) Download All Images
+        ul.button-actions
+            li
+                h4 How do you need the photos?
+            li
+                form(action=`/product/${product._id}/download` method="POST")
+                    .form-group
+                        input(type="checkbox" id="watermarked" name="watermarked")
+                        label(for="watermarked") Do you want to watermark the pictures?
+                    input(type="submit")
+
 
         - const images = product.product_image || []
 
