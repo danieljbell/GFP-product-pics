@@ -1,15 +1,6 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
-// const Heroku = require('heroku-client')
-// const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN })
-
-// const herokuApp = heroku.apps('gfp-product-pics');
-// herokuApp.domains().list(function (err, domains) {
-//   console.log(err);
-//   console.log(domains);
-// });
-
 const cloudinary = require('cloudinary');
 const mailgun = require('mailgun-js')({
   apiKey: process.env.MAILGUN_API_KEY,
@@ -45,9 +36,12 @@ exports.createProduct = async (req, res) => {
 
         for(let i = 0; i <= upload_len + 1; i++) {
             let filePath = filePaths[i];
+
+            let prodName = req.body.code.split(' ').join('-') + '-' + i;
+
             await cloudinary.v2.uploader.upload(filePath, {
               tags: req.body.code,
-              public_id: `${req.body.code}-${i}`
+              public_id: prodName
             }, (error, result) => {
 
                 if(upload_res.length === upload_len) {
@@ -71,10 +65,12 @@ exports.createProduct = async (req, res) => {
     /*waits until promise is resolved before sending back response to user*/
     let upload = await multipleUpload; 
 
+    let zipName = req.body.code.split(' ').join('-');
+
     const zip = await cloudinary.v2.uploader.create_zip({
       tags: req.body.code,
-      target_public_id: req.body.code,
-      target_tags: req.body.code
+      target_public_id: zipName,
+      target_tags: zipName
     }, function(error, result) {});
     
     const product = new Product({
@@ -90,10 +86,10 @@ exports.createProduct = async (req, res) => {
       from: "GFP Product Pics <dbell@rfemail.com>",
       to: "djbell70@gmail.com",
       subject: "A New Product Has Been Added",
-      html: `${product.code} has been added to the site. <a href="/product/${product.slug}">View Product</a>`
+      html: `${product.code} has been added to the site. <a href="/product/${product.slug}">View Product</a> or <a href="${product.download_zip}">Download Pictures</a>`
     }
 
-    mailgun.messages().send(emailData, function(error, body) {
+    await mailgun.messages().send(emailData, function(error, body) {
       console.log(error);
       console.log(body);
     });
@@ -104,8 +100,8 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.getProducts = async (req, res) => {
-  console.log(req.socket.server);
     const products = await Product.find();
+    products.reverse();
     res.render('listProducts', {
         title: 'All Products',
         vueID: 'v-list-products',

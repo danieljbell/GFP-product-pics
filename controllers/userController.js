@@ -36,7 +36,12 @@ exports.resize = async (req, res, next) => {
   }
   const datauri = new Datauri();
   datauri.format('.png', req.file.buffer);
-  await cloudinary.v2.uploader.upload(datauri.content, {
+  let profilePic = datauri.content;
+  console.log(profilePic);
+  if (!profilePic === undefined) {
+    profilePic = '../public/images/default-profile-pic.jpg';
+  }
+  await cloudinary.v2.uploader.upload(profilePic, {
     public_id: `${req.body.first_name}-${req.body.last_name}`,
     tags: `${req.body.first_name}-${req.body.last_name}`
   }, function(error, result) {
@@ -92,7 +97,10 @@ exports.validateRegister = (req, res, next) => {
   next();
 };
 
-exports.register = async (req, res, next) => {  
+exports.register = async (req, res, next) => {
+  // if (!req.body.profile_photo) {
+  //   req.body.profile_photo = 'https://fillmurray.com/400/400';
+  // }
   const user = new User({ 
     email: req.body.email, 
     first_name: req.body.first_name,
@@ -104,7 +112,7 @@ exports.register = async (req, res, next) => {
   User.register(user, req.body.password, function(err, user) {
     console.log(err);
   })
-  res.render('/')
+  res.redirect(`/profile/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}`)
 };
 
 exports.getUser = async (req, res) => {
@@ -127,10 +135,20 @@ exports.getUser = async (req, res) => {
 
   res.render('profile/displayProfile', {
     title: 'user profile',
+    bodyClass: 'display-profile',
     reqUser,
     displayUser,
     prettyName,
     products
   }
   );
+}
+
+exports.allUsers = async (req, res) => {
+  const users = await User.find();
+  res.render('profile/displayAllUsers', {
+    title: 'All Users',
+    bodyClass: 'display-all-users',
+    users
+  });
 }

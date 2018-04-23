@@ -6,14 +6,22 @@ block content
 
     .site-width
 
-        p #{products.length}
+        .user-profile
 
-        .edit-profile-form
+            .profile-pic
+                if user.profile_photo
+                    img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_250,h_250,c_fill/v1522413167/${displayUser.profile_photo}.jpg`, alt=`Your Profile Photo`)
+                else
+                    img(src="/images/default-user-image.png", alt="")
 
             .profile-data
                 h1 #{prettyName}
                     if user._id.equals(displayUser._id)
                         a.edit-profile(href="#0") (edit my profile)
+
+                p Member since #{h.moment(displayUser.created_at).format('MMMM Do, YYYY')}
+
+                p #{products.length} products created
 
                 ul
                     li 
@@ -21,8 +29,7 @@ block content
                     li
                         a(href=`tel:${displayUser.phone_number}`) #{displayUser.phone_number}
 
-            .profile-pic
-                img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_250,h_250,c_fill/v1522413167/${displayUser.profile_photo}.jpg`, alt=`Your Profile Photo`)
+        hr
 
         ul.product-list
             each product in products

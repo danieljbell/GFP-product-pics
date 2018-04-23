@@ -1,0 +1,14 @@
+.user-profile {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.display-profile .product-list {
+    margin-top: 2rem;
+}
+
+.profile-data ul {
+    padding-top: 1rem;
+}

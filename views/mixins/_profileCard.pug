@@ -1,0 +1,8 @@
+mixin profileCard(user = {})
+    li.card--profile
+        a(href=`/profile/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}}`)
+            if user.profile_photo
+                img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_200,h_200,c_fill/v1522413167/${user.profile_photo}.jpg`, alt=`Your Profile Photo`)
+            else
+                img(src="/images/default-user-image.png", alt="")
+            h4 #{user.first_name} #{user.last_name}

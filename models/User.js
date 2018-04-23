@@ -31,7 +31,12 @@ const userSchema = new Schema({
   },
   profile_photo: {
     type: String
-  }
+  },
+  created_at: {
+      type: Date,
+      required: true,
+      default: Date.now
+  },
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });

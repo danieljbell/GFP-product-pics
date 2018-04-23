@@ -615,6 +615,51 @@ OUTLINE BUTTONS
 .confirm-download + .button-actions {
   display: block; }
 
+.single-product-details {
+  padding-bottom: 2rem; }
+
+.single-product-meta h1 {
+  padding-bottom: 1em; }
+
+.single-product-creator {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 100px 1fr;
+      grid-template-columns: 100px 1fr;
+  grid-gap: 1rem;
+  -ms-flex-align: center;
+      align-items: center; }
+
+.single-product-creator--image img {
+  display: block;
+  max-width: 100px;
+  border-radius: 50%;
+  border: 1px solid #f0f0f0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); }
+
+.single-product-details {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr 1fr;
+      grid-template-columns: 2fr 1fr; }
+
+.single-product-actions {
+  text-align: right; }
+
+.single-product-photos {
+  padding-top: 2rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(250px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 2rem; }
+
+.individual-image {
+  padding: 0;
+  display: block;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1); }
+
 #v-refine-products {
   padding-top: 2rem;
   display: -ms-grid;
@@ -683,5 +728,19 @@ OUTLINE BUTTONS
 
 .profile-pic img {
   border-radius: 50%; }
+
+.user-profile {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 250px 1fr;
+      grid-template-columns: 250px 1fr;
+  grid-gap: 2rem;
+  margin-bottom: 2rem; }
+
+.display-profile .product-list {
+  margin-top: 2rem; }
+
+.profile-data ul {
+  padding-top: 1rem; }
 
 /*# sourceMappingURL=style.css.map*/

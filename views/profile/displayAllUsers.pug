@@ -1,0 +1,12 @@
+extends ../layout
+
+include ../mixins/_profileCard
+
+block content
+
+    .site-width
+        
+        ul.profile-list
+            
+            each user in users
+                +profileCard(user)

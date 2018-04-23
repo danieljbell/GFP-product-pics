@@ -5,15 +5,66 @@ block prepend styles
 
 block content
 
+    - const images = product.product_image || []
+    - const formattedCode = product.code.toUpperCase();
+
     .site-width
-        - const formattedCode = product.code.toUpperCase();
+
+        .single-product-details
+            .single-product-meta
+                h1= formattedCode
+                .single-product-creator
+                    .single-product-creator--image
+                        if product.creator.profile_photo
+                            img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_100,h_100,c_fill/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
+                        else 
+                            img(src="/images/default-user-image.png", alt="")
+                    .single-product-creator--content
+                        p By: 
+                            a(href=`/profile/${product.creator.first_name.toLowerCase()}-${product.creator.last_name.toLowerCase()}`) #{product.creator.first_name} #{product.creator.last_name}
+                        p Created: 2 days ago
+
+            .single-product-actions
+                button.btn-solid--brand.download-product Download All Images
+                ul.button-actions
+                    li
+                        h4 How do you need the photos?
+                    li
+                        form(action=`/product/${product._id}/download` method="POST")
+                            .form-group
+                                input(type="checkbox" id="watermarked" name="watermarked")
+                                label(for="watermarked") Do you want to watermark the pictures?
+                            input(type="submit")
+                a.btn-outline--brand-two.edit-product(href=`/product/${product._id}/edit`) Edit Product
+        
+        hr
+
+        .single-product-photos
+
+            each image, index in images
+                .modal-image(data-index=`${index}`)
+                    img.individual-image(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/${image}.jpg`, alt="")
+                    ul.photo-actions
+                        li
+                            button.view-photo(data-id=`${image}`)
+                                img(src="/images/icons/search.svg", alt="Zoom Photo") 
+                                span Zoom
+                        li
+                            a.download-photo(href=`https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/${image}.jpg` download)
+                                img(src="/images/icons/download.svg", alt="")
+                                span Download
+
+    //- .site-width
 
         h1 #{formattedCode}
         
         if product.creator
             p Created by: 
                 a(href=`/profile/${product.creator.first_name.toLowerCase()}-${product.creator.last_name.toLowerCase()}`) #{product.creator.first_name} #{product.creator.last_name}
-            img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_65,h_65,c_fill/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
+            if product.creator.profile_photo
+                img.product-creator-image(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_65,h_65,c_fill/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
+            else
+                img.product-creator-image(src="/images/default-user-image.png", alt="")
         
         if product.created_at
             p Created #{h.moment(product.created_at).fromNow()}
@@ -30,8 +81,6 @@ block content
                         label(for="watermarked") Do you want to watermark the pictures?
                     input(type="submit")
 
-
-        - const images = product.product_image || []
 
         .strip
 
