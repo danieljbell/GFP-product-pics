@@ -9,7 +9,7 @@ block content
         .user-profile
 
             .profile-pic
-                if user.profile_photo
+                if displayUser.profile_photo
                     img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_250,h_250,c_fill/v1522413167/${displayUser.profile_photo}.jpg`, alt=`Your Profile Photo`)
                 else
                     img(src="/images/default-user-image.png", alt="")
