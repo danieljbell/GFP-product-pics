@@ -19,6 +19,10 @@ body {
   font-size: 18px;
   line-height: 1.4; }
 
+ul,
+ol {
+  list-style-position: inside; }
+
 .site-width {
   width: calc(100% - 2rem);
   max-width: 1080px;
@@ -530,6 +534,10 @@ OUTLINE BUTTONS
 .delete-photo {
   margin-bottom: 0; }
 
+.card--profile img {
+  max-width: 200px;
+  border-radius: 50%; }
+
 .edit-product .strip {
   display: -ms-grid;
   display: grid;
@@ -742,5 +750,14 @@ OUTLINE BUTTONS
 
 .profile-data ul {
   padding-top: 1rem; }
+
+.display-all-users .profile-list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(200px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  text-align: center;
+  list-style-type: none;
+  grid-gap: 2rem; }
 
 /*# sourceMappingURL=style.css.map*/

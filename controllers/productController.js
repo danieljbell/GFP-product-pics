@@ -70,7 +70,13 @@ exports.createProduct = async (req, res) => {
     const zip = await cloudinary.v2.uploader.create_zip({
       tags: req.body.code,
       target_public_id: zipName,
-      target_tags: zipName
+      target_tags: zipName,
+      transformations: [
+        { width: 400, height: 400, crop: 'fill' },
+        { width: 400, height: 400, crop: 'fill', overlay: 'overlay' },
+        { width: 1000, height: 1000, crop: 'pad' },
+        { width: 1000, height: 1000, crop: 'pad', overlay: 'overlay' },
+      ]
     }, function(error, result) {});
     
     const product = new Product({
@@ -89,10 +95,10 @@ exports.createProduct = async (req, res) => {
       html: `${product.code} has been added to the site. <a href="/product/${product.slug}">View Product</a> or <a href="${product.download_zip}">Download Pictures</a>`
     }
 
-    await mailgun.messages().send(emailData, function(error, body) {
-      console.log(error);
-      console.log(body);
-    });
+    // await mailgun.messages().send(emailData, function(error, body) {
+    //   console.log(error);
+    //   console.log(body);
+    // });
 
     req.flash('success', `Successfully Added Product: ${product.code}!`);
     res.redirect(`/product/${product.slug}`);

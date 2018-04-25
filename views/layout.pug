@@ -52,6 +52,8 @@ body(class=`${bodyClass || ''}`)
                     li
                       a(href=`/profile/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}`) My Profile
                     li
+                      a(href="/profile/all") All Users
+                    li
                       a(href="/logout") Logout
 
     block content

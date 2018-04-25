@@ -15,11 +15,6 @@ document.addEventListener('click', function(e) {
       photoBiggify(findParentBySelector(e.target, '.modal-image'));
     }
 
-    if (e.target.classList.contains('download-product')) {
-      e.target.classList.add('confirm-download');
-      document.body.classList.toggle('download-open');
-    }
-
 });
 
 document.addEventListener('keydown', function(e) {

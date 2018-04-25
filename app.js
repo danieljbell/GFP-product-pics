@@ -12,11 +12,26 @@ const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+const schedule = require('node-schedule');
 require('./handlers/passport');
 
 
 // create our Express app
 const app = express();
+
+// var j = schedule.scheduleJob('0-59 * * * * *', function(){
+  // console.log('hey');
+  // const emailData = {
+  //     from: "GFP Product Pics <dbell@rfemail.com>",
+  //     to: "djbell70@gmail.com",
+  //     subject: "A New Product Has Been Added",
+  //     html: `${product.code} has been added to the site. <a href="/product/${product.slug}">View Product</a> or <a href="${product.download_zip}">Download Pictures</a>`
+  //   }
+
+  //   mailgun.messages().send(emailData, function(error, body) {
+  //     console.log(error);
+  //   });
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views')); // this is the folder where we keep our pug files
