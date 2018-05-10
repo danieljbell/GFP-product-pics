@@ -32,7 +32,8 @@ const productSchema = new mongoose.Schema({
         required: 'You have to be logged in'
     },
     product_image: [String],
-    download_zip: String
+    download_zip: String,
+    seller_channels: [String]
 });
 
 productSchema.pre('save', async function(next) {

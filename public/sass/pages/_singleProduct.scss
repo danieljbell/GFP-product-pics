@@ -78,3 +78,35 @@
     border: 1px solid $light-gray;
     box-shadow: 0 3px 15px rgba(black, 0.1);
 }
+
+.single--seller-channels {
+    p,
+    ul {
+        display: inline-block;
+    }
+}
+
+.added-to-selling-channels {
+    list-style-type: none;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+
+    li {
+        display: inline-block;
+        font-size: 0.6rem;
+        margin-right: 0.25rem;
+    }
+
+    label {
+        padding: 0.25rem 0.75rem;
+        border: 1px solid red;
+        border-radius: 1rem;
+    }
+
+    input:checked ~ label {
+        border: 1px solid $brand;
+        background-color: $brand;
+        color: #fff;
+    }
+
+}

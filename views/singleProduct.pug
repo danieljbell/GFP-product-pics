@@ -22,7 +22,7 @@ block content
                     .single-product-creator--content
                         p By: 
                             a(href=`/profile/${product.creator.first_name.toLowerCase()}-${product.creator.last_name.toLowerCase()}`) #{product.creator.first_name} #{product.creator.last_name}
-                        p Created: 2 days ago
+                        p Created: #{h.moment(product.created_at, "YYYYMMDD").fromNow()}
 
             .single-product-actions
                 a.btn-solid--brand(href=`http://res.cloudinary.com/dpkuo9jjc/raw/upload/v1524601962/${product.slug}.zip`) Download All Images
@@ -36,6 +36,19 @@ block content
                                 label(for="watermarked") Do you want to watermark the pictures?
                             input(type="submit")
                 a.btn-outline--brand-two.edit-product(href=`/product/${product._id}/edit`) Edit Product
+
+            form(action=`/seller-channel/${product._id}` method="POST" class="single--seller-channels")
+                p #{formattedCode}'s photos are on
+                - const choices = ['greenfarmparts', 'amazon', 'ebay', 'jet']
+                - const seller_channels = product.seller_channels || []
+                ul.added-to-selling-channels
+                    each choice in choices
+                        li
+                            input.visually-hidden(type="checkbox" id=choice value=choice name="seller_channels" checked=(seller_channels.includes(choice)))
+                            label(for=choice) #{choice.toUpperCase()}
+                    li
+                        input(type="submit" value="Update")
+
         
         hr
 

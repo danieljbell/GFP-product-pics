@@ -668,6 +668,27 @@ OUTLINE BUTTONS
   border: 1px solid #f0f0f0;
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1); }
 
+.single--seller-channels p,
+.single--seller-channels ul {
+  display: inline-block; }
+
+.added-to-selling-channels {
+  list-style-type: none;
+  margin-top: 1rem;
+  margin-left: 0.5rem; }
+  .added-to-selling-channels li {
+    display: inline-block;
+    font-size: 0.6rem;
+    margin-right: 0.25rem; }
+  .added-to-selling-channels label {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid red;
+    border-radius: 1rem; }
+  .added-to-selling-channels input:checked ~ label {
+    border: 1px solid #29652d;
+    background-color: #29652d;
+    color: #fff; }
+
 #v-refine-products {
   padding-top: 2rem;
   display: -ms-grid;
@@ -759,5 +780,15 @@ OUTLINE BUTTONS
   text-align: center;
   list-style-type: none;
   grid-gap: 2rem; }
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0; }
 
 /*# sourceMappingURL=style.css.map*/

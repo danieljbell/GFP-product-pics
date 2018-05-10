@@ -194,7 +194,14 @@ exports.downloadImages = async (req, res) => {
   res.send(req.body);
 }
 
-
+exports.updateSellerChannel = async (req, res) => {
+  const product = await Product.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+        runValidators: true
+    }).exec();
+  req.flash('success', `${product.code} has been updated and listed on ${product.seller_channels}.`);
+  res.redirect('back');
+}
 
 
 function escapeRegex(text) {
