@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 const cloudinary = require('cloudinary');
 const mailgun = require('mailgun-js')({
@@ -63,6 +67,26 @@ exports.createProduct = async (req, res) => {
     .catch((error) => error)
 
     /*waits until promise is resolved before sending back response to user*/
+    
+
+    await product.save();
+
+    // const emailData = {
+    //   from: "GFP Product Pics <dbell@rfemail.com>",
+    //   to: "djbell70@gmail.com",
+    //   subject: "A New Product Has Been Added",
+    //   html: `${product.code} has been added to the site. <a href="/product/${product.slug}">View Product</a> or <a href="${product.download_zip}">Download Pictures</a>`
+    // }
+
+    // await mailgun.messages().send(emailData, function(error, body) {
+    //   console.log(error);
+    //   console.log(body);
+    // });
+
+    req.flash('success', `Successfully Added Product: ${product.code}!`);
+    res.redirect(`/product/${product.slug}`);
+
+
     let upload = await multipleUpload; 
 
     let zipName = req.body.code.split(' ').join('-');
@@ -85,23 +109,6 @@ exports.createProduct = async (req, res) => {
         product_image: upload,
         download_zip: zip.secure_url
     });
-
-    await product.save();
-
-    const emailData = {
-      from: "GFP Product Pics <dbell@rfemail.com>",
-      to: "djbell70@gmail.com",
-      subject: "A New Product Has Been Added",
-      html: `${product.code} has been added to the site. <a href="/product/${product.slug}">View Product</a> or <a href="${product.download_zip}">Download Pictures</a>`
-    }
-
-    // await mailgun.messages().send(emailData, function(error, body) {
-    //   console.log(error);
-    //   console.log(body);
-    // });
-
-    req.flash('success', `Successfully Added Product: ${product.code}!`);
-    res.redirect(`/product/${product.slug}`);
 
 };
 
@@ -140,12 +147,30 @@ exports.getProductBySlug = async (req, res, next) => {
     if (!product) {
         return next(); 
     }
-    
-    res.render('singleProduct', { 
-      title: product.code, 
-      bodyClass: 'single-product',
-      product
-     });
+
+
+    const url = `https://jdparts.deere.com/servlet/com.deere.u90.jdparts.view.servlets.searchcontroller.EquipmentWhereUsedSearch?userAction=search&partNumberInfo=${req.params.slug}`;
+    axios.get(url)
+      .then(function (response) {
+        const $ = cheerio.load(response.data);
+        const form = $('form[action="/servlet/com.deere.u90.jdparts.view.servlets.searchcontroller.EquipmentWhereUsedSearch"]');
+        const tableRows = form.find('table:nth-child(8) table');
+        let fitment = [];
+        tableRows.find('tr td:nth-child(8)').each(function(i, elem) {
+          fitment[i] = $(this).text().trim();
+        });
+        fitment.splice(0, 1);
+        res.render('singleProduct', { 
+          title: product.code, 
+          bodyClass: 'single-product',
+          product,
+          fitment
+         });
+      })
+      .catch(function (error) {
+        console.log(error);
+        res.send('Refresh your page, something went wrong. If it continues, tell Daniel!');
+      });
 };
 
 exports.deleteProduct = async (req, res) => {

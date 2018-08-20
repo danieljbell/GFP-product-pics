@@ -126,7 +126,7 @@ OUTLINE BUTTONS
   cursor: pointer;
   font-size: 1rem;
   text-align: center;
-  border: 4px solid #29652d;
+  border: 3px solid #29652d;
   color: #29652d; }
   .btn-outline--brand:hover {
     text-decoration: none;
@@ -143,7 +143,7 @@ OUTLINE BUTTONS
   cursor: pointer;
   font-size: 1rem;
   text-align: center;
-  border: 4px solid #bdd341;
+  border: 3px solid #bdd341;
   color: #bdd341; }
   .btn-outline--brand-two:hover {
     text-decoration: none;
@@ -160,7 +160,7 @@ OUTLINE BUTTONS
   cursor: pointer;
   font-size: 1rem;
   text-align: center;
-  border: 4px solid #fff;
+  border: 3px solid #fff;
   color: #fff; }
   .btn-outline--white:hover {
     text-decoration: none;
@@ -688,6 +688,24 @@ OUTLINE BUTTONS
     border: 1px solid #29652d;
     background-color: #29652d;
     color: #fff; }
+
+.part-fitment {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 300px 1fr;
+      grid-template-columns: 300px 1fr;
+  padding: 3rem 0; }
+
+.part-fitment--list {
+  list-style-type: none; }
+
+.part-fitment--item {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+  padding: 0 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem; }
 
 #v-refine-products {
   padding-top: 2rem;

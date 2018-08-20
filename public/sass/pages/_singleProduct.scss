@@ -110,3 +110,22 @@
     }
 
 }
+
+.part-fitment {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    padding: 3rem 0;
+}
+
+.part-fitment--list {
+    list-style-type: none;
+}
+
+.part-fitment--item {
+    display: inline-block;
+    border: 1px solid $medium-gray;
+    border-radius: 2rem;
+    padding: 0 1rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}

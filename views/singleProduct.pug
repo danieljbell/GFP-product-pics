@@ -67,6 +67,18 @@ block content
                                 img(src="/images/icons/download.svg", alt="")
                                 span Download
 
+        hr
+        
+        if fitment
+            .part-fitment
+                .part-fitment--actions
+                    h2 Product Fitment
+                    button.btn-outline--brand-two Copy - Pipe Seperated
+                    button.btn-outline--brand-two Copy - Comma Seperated
+                ul.part-fitment--list
+                    each model in fitment
+                        li.part-fitment--item #{model}
+
     //- .site-width
 
         h1 #{formattedCode}
@@ -121,4 +133,5 @@ block modals
 
 block append scripts
     script(src="/dist/libs/tiny-slider.js")
+    script(src="/dist/libs/atomic.js")
     script(src="/javascripts/pages/singleProduct.js")

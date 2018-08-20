@@ -26,7 +26,7 @@ body(class=`${bodyClass || ''}`)
             ul
               li
                 form(action="/search" method="GET")
-                  input(type="search" name="q" placeholder="Search for product" v-model="keyword" v-on:keyup="productLookup")
+                  input(type="search" name="q" placeholder="Search for product")
               li.sub-menu-button
                 button Edit
                 ul.sub-menu

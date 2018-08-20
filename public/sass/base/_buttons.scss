@@ -27,7 +27,7 @@
 
 @mixin outlineButton($c: #fff, $hover-color: #fff) {
     @include button();
-    border: 4px solid $c;
+    border: 3px solid $c;
     color: $c;
     &:hover {
         text-decoration: none;

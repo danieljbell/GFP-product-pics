@@ -7,8 +7,6 @@ const slider = tns({
 
 document.addEventListener('click', function(e) {
 
-  console.log(e.target.name);
-
     if (e.target.parentElement.classList.contains('view-photo') || e.target.classList.contains('view-photo')) {
       photoBiggify(findParentBySelector(e.target, '.modal-image'));
     }
