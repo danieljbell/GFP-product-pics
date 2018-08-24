@@ -13,16 +13,6 @@ block content
         .single-product-details
             .single-product-meta
                 h1= formattedCode
-                .single-product-creator
-                    .single-product-creator--image
-                        if product.creator.profile_photo
-                            img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_100,h_100,c_fill/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
-                        else 
-                            img(src="/images/default-user-image.png", alt="")
-                    .single-product-creator--content
-                        p By: 
-                            a(href=`/profile/${product.creator.first_name.toLowerCase()}-${product.creator.last_name.toLowerCase()}`) #{product.creator.first_name} #{product.creator.last_name}
-                        p Created: #{h.moment(product.created_at, "YYYYMMDD").fromNow()}
 
             .single-product-actions
                 a.btn-solid--brand(href=`http://res.cloudinary.com/dpkuo9jjc/raw/upload/v1524601962/${product.slug}.zip`) Download All Images
@@ -69,15 +59,29 @@ block content
 
         hr
         
-        if fitment
+        if product.fitment.length > 1
             .part-fitment
                 .part-fitment--actions
                     h2 Product Fitment
+                    p Fits #{product.fitment.length} models
                     button.btn-outline--brand-two Copy - Pipe Seperated
                     button.btn-outline--brand-two Copy - Comma Seperated
                 ul.part-fitment--list
-                    each model in fitment
+                    each model in product.fitment
                         li.part-fitment--item #{model}
+
+        hr
+
+        .single-product-creator
+            .single-product-creator--image
+                if product.creator.profile_photo
+                    img(src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/w_100,h_100,c_fill/v1522413167/${product.creator.profile_photo}.jpg`, alt=`${product.creator.first_name} ${product.creator.last_name}`)
+                else 
+                    img(src="/images/default-user-image.png", alt="")
+            .single-product-creator--content
+                p By: 
+                    a(href=`/profile/${product.creator.first_name.toLowerCase()}-${product.creator.last_name.toLowerCase()}`) #{product.creator.first_name} #{product.creator.last_name}
+                p Created: #{h.moment(product.created_at, "YYYYMMDD").fromNow()}                        
 
     //- .site-width
 

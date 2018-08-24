@@ -34,6 +34,7 @@ router.get('/product/:id/delete',
 
 // VIEWING SINGLE PRODUCT
 router.get('/product/:slug', 
+    authController.checkAuth,
     catchErrors(productController.getProductBySlug)
 );
 router.post('/product/:id/download', 
@@ -83,6 +84,7 @@ API
 =========================
 */
 router.get('/api/v1/search', catchErrors(productController.findProducts));
+router.get('/api/v1/gfp-search', catchErrors(productController.findGFPProduct));
 
 
 module.exports = router;

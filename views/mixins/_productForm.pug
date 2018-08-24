@@ -4,12 +4,13 @@ mixin productForm(product = {})
             .form-group
                 label(for="product-code") Product Code
                 input(type="text" id="product-code" name="code" value=product.code)
+            input(type="file" accept="image/*")
             input(type="submit" value="Save Product")
             .strip
                 if product.product_image
                     each image in product.product_image
                         input(type="image" name="product_image" src=`https://res.cloudinary.com/dpkuo9jjc/image/upload/v1522413167/${image}.jpg`)
-        .picture-stage
-            canvas.photo
-            video.player
-            button#takePhoto Take Photo
+        //- .picture-stage
+        //-     canvas.photo
+        //-     video.player
+        //-     button#takePhoto Take Photo

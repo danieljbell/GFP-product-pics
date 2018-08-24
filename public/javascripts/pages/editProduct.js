@@ -10,36 +10,42 @@ const photos = [];
 let index = 0;
 
 document.addEventListener('click', function(e) {
-    
-    if (e.target.id === 'takePhoto') {
-      e.preventDefault();
-      takePhoto();
-    }
-    
-    if (e.target.parentElement.classList.contains('view-photo') || e.target.classList.contains('view-photo')) {
-      e.preventDefault();
-      photoBiggify(findParentBySelector(e.target, '.modal-image'));
-    }
+  if (e.target.id === 'takePhoto') {
+    e.preventDefault();
+    takePhoto();
+  }
 
-    if (e.target.parentElement.classList.contains('delete-photo') || e.target.classList.contains('delete-photo')) {
-      e.preventDefault();
-      const imgSelector = findParentBySelector(e.target, '.modal-image');
-      imgSelector.previousElementSibling.remove();
-      imgSelector.remove();
-    }
+  if (
+    e.target.parentElement.classList.contains('view-photo') ||
+    e.target.classList.contains('view-photo')
+  ) {
+    e.preventDefault();
+    photoBiggify(findParentBySelector(e.target, '.modal-image'));
+  }
 
-    if (e.target.id === 'delete-product') {
-      e.preventDefault();
-      e.target.classList.add('confirm-delete');
-      document.body.classList.add('delete-open');
-    }
+  if (
+    e.target.parentElement.classList.contains('delete-photo') ||
+    e.target.classList.contains('delete-photo')
+  ) {
+    e.preventDefault();
+    const imgSelector = findParentBySelector(e.target, '.modal-image');
+    imgSelector.previousElementSibling.remove();
+    imgSelector.remove();
+  }
 
-    if (e.target.id === 'no-delete') {
-      e.preventDefault();
-      findParentBySelector(e.target, '.site-width').querySelector('#delete-product').classList.remove('confirm-delete');
-      document.body.classList.remove('delete-open');
-    }
+  if (e.target.id === 'delete-product') {
+    e.preventDefault();
+    e.target.classList.add('confirm-delete');
+    document.body.classList.add('delete-open');
+  }
 
+  if (e.target.id === 'no-delete') {
+    e.preventDefault();
+    findParentBySelector(e.target, '.site-width')
+      .querySelector('#delete-product')
+      .classList.remove('confirm-delete');
+    document.body.classList.remove('delete-open');
+  }
 });
 
 document.addEventListener('keydown', function(e) {
@@ -53,12 +59,15 @@ getVideo();
 
 video.addEventListener('canplay', paintToCanvas);
 
+// console.dir(video);
 
 function getVideo() {
-  navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+  navigator.mediaDevices
+    .getUserMedia({ video: true, audio: false })
     .then(localMediaStream => {
       video.src = window.URL.createObjectURL(localMediaStream);
       video.play();
+      console.log(video);
     })
     .catch(err => {
       console.error(`OH NO!!!`, err);
@@ -66,8 +75,8 @@ function getVideo() {
 }
 
 function paintToCanvas() {
-  const width = video.videoWidth;
-  const height = video.videoHeight;
+  const width = video.videoWidth * 3;
+  const height = video.videoHeight * 3;
   canvas.width = width;
   canvas.height = height;
 
@@ -109,7 +118,7 @@ function photoBiggify(elem) {
   modalContainer.querySelector('.modal--body').innerHTML = '';
 
   photos.forEach(function(photo) {
-    modalBody.innerHTML += photo
+    modalBody.innerHTML += photo;
   });
 
   const slider = tns({
@@ -133,18 +142,35 @@ function photoBiggify(elem) {
   });
 }
 
-function collectionHas(a, b) { //helper function (see below)
-    for(var i = 0, len = a.length; i < len; i ++) {
-        if(a[i] == b) return true;
-    }
-    return false;
+function collectionHas(a, b) {
+  //helper function (see below)
+  for (var i = 0, len = a.length; i < len; i++) {
+    if (a[i] == b) return true;
+  }
+  return false;
 }
 function findParentBySelector(elm, selector) {
-    var all = document.querySelectorAll(selector);
-    var cur = elm.parentNode;
-    while(cur && !collectionHas(all, cur)) { //keep going up until you find a match
-        cur = cur.parentNode; //go up
-    }
-    return cur; //will return null if not found
+  var all = document.querySelectorAll(selector);
+  var cur = elm.parentNode;
+  while (cur && !collectionHas(all, cur)) {
+    //keep going up until you find a match
+    cur = cur.parentNode; //go up
+  }
+  return cur; //will return null if not found
 }
 
+const productCodeInput = document.querySelector('#product-code');
+console.log(productCodeInput);
+productCodeInput.addEventListener('keyup', function(e) {
+  setTimeout(function() {
+    atomic('/api/v1/gfp-search')
+      .then(function(response) {
+        console.log(response.data); // xhr.responseText
+        console.log(response.xhr); // full response
+      })
+      .catch(function(error) {
+        console.log(error.status); // xhr.status
+        console.log(error.statusText); // xhr.statusText
+      });
+  }, 1000);
+});

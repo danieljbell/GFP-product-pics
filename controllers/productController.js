@@ -67,49 +67,60 @@ exports.createProduct = async (req, res) => {
     .catch((error) => error)
 
     /*waits until promise is resolved before sending back response to user*/
-    
-
-    await product.save();
-
-    // const emailData = {
-    //   from: "GFP Product Pics <dbell@rfemail.com>",
-    //   to: "djbell70@gmail.com",
-    //   subject: "A New Product Has Been Added",
-    //   html: `${product.code} has been added to the site. <a href="/product/${product.slug}">View Product</a> or <a href="${product.download_zip}">Download Pictures</a>`
-    // }
-
-    // await mailgun.messages().send(emailData, function(error, body) {
-    //   console.log(error);
-    //   console.log(body);
-    // });
-
-    req.flash('success', `Successfully Added Product: ${product.code}!`);
-    res.redirect(`/product/${product.slug}`);
-
 
     let upload = await multipleUpload; 
 
-    let zipName = req.body.code.split(' ').join('-');
+    // let zipName = req.body.code.split(' ').join('-');
 
-    const zip = await cloudinary.v2.uploader.create_zip({
-      tags: req.body.code,
-      target_public_id: zipName,
-      target_tags: zipName,
-      transformations: [
-        { width: 400, height: 400, crop: 'fill' },
-        { width: 400, height: 400, crop: 'fill', overlay: 'overlay' },
-        { width: 1000, height: 1000, crop: 'pad' },
-        { width: 1000, height: 1000, crop: 'pad', overlay: 'overlay' },
-      ]
-    }, function(error, result) {});
-    
-    const product = new Product({
-        code: req.body.code,
-        creator: req.user._id,
-        product_image: upload,
-        download_zip: zip.secure_url
-    });
+    // const zip = await cloudinary.v2.uploader.create_zip({
+    //   tags: req.body.code,
+    //   target_public_id: zipName,
+    //   target_tags: zipName,
+    //   transformations: [
+    //     { width: 400, height: 400, crop: 'fill' },
+    //     { width: 400, height: 400, crop: 'fill', overlay: 'overlay' },
+    //     { width: 1000, height: 1000, crop: 'pad' },
+    //     { width: 1000, height: 1000, crop: 'pad', overlay: 'overlay' },
+    //   ]
+    // }, function(error, result) {});
 
+    const url = `https://jdparts.deere.com/servlet/com.deere.u90.jdparts.view.servlets.searchcontroller.EquipmentWhereUsedSearch?userAction=search&partNumberInfo=${req.body.code}`;
+    await axios.get(url)
+      .then(function (response) {
+        const $ = cheerio.load(response.data);
+        const form = $('form[action="/servlet/com.deere.u90.jdparts.view.servlets.searchcontroller.EquipmentWhereUsedSearch"]');
+        const tableRows = form.find('table:nth-child(8) table');
+        let fitment = [];
+        tableRows.find('tr td:nth-child(8)').each(function(i, elem) {
+          fitment[i] = $(this).text().trim();
+        });
+        fitment.splice(0, 1);
+        var uniqueFitment = [...new Set(fitment)];
+        if (uniqueFitment.length < 1) {
+          uniqueFitment = 'Fitment Not Available';
+        }
+        return uniqueFitment;
+      })
+      .catch(function (error) {
+        console.log(error);
+        const uniqueFitment = 'Failed Scrape';
+      })
+      .then(function(uniqueFitment) {
+        const product = new Product({
+          code: req.body.code,
+          creator: req.user._id,
+          product_image: upload,
+          // download_zip: zip.secure_url,
+          fitment: uniqueFitment
+        });
+
+        console.log(uniqueFitment);
+
+        product.save();
+
+        req.flash('success', `Successfully Added Product: ${product.code}!`);
+        res.redirect(`/product/${product.code}`);
+      })
 };
 
 exports.getProducts = async (req, res) => {
@@ -148,29 +159,34 @@ exports.getProductBySlug = async (req, res, next) => {
         return next(); 
     }
 
-
-    const url = `https://jdparts.deere.com/servlet/com.deere.u90.jdparts.view.servlets.searchcontroller.EquipmentWhereUsedSearch?userAction=search&partNumberInfo=${req.params.slug}`;
-    axios.get(url)
-      .then(function (response) {
-        const $ = cheerio.load(response.data);
-        const form = $('form[action="/servlet/com.deere.u90.jdparts.view.servlets.searchcontroller.EquipmentWhereUsedSearch"]');
-        const tableRows = form.find('table:nth-child(8) table');
-        let fitment = [];
-        tableRows.find('tr td:nth-child(8)').each(function(i, elem) {
-          fitment[i] = $(this).text().trim();
+    if (product.fitment.length < 1) {
+      console.log('no fitment. trying to fetch data.\n');
+      const url = `https://jdparts.deere.com/servlet/com.deere.u90.jdparts.view.servlets.searchcontroller.EquipmentWhereUsedSearch?userAction=search&partNumberInfo=${req.params.slug}`;
+      axios.get(url)
+        .then(function (response) {
+          const $ = cheerio.load(response.data);
+          const form = $('form[action="/servlet/com.deere.u90.jdparts.view.servlets.searchcontroller.EquipmentWhereUsedSearch"]');
+          const tableRows = form.find('table:nth-child(8) table');
+          let fitment = [];
+          tableRows.find('tr td:nth-child(8)').each(function(i, elem) {
+            fitment[i] = $(this).text().trim();
+          });
+          fitment.splice(0, 1);
+          console.log(fitment);
+          product.update({ fitment: fitment });
+        })  
+        .catch(function (error) {
+          console.log(error);
+          res.send('Refresh your page, something went wrong. If it continues, tell Daniel!');
         });
-        fitment.splice(0, 1);
-        res.render('singleProduct', { 
-          title: product.code, 
-          bodyClass: 'single-product',
-          product,
-          fitment
-         });
-      })
-      .catch(function (error) {
-        console.log(error);
-        res.send('Refresh your page, something went wrong. If it continues, tell Daniel!');
+      }
+
+      res.render('singleProduct', { 
+        title: product.code, 
+        bodyClass: 'single-product',
+        product
       });
+
 };
 
 exports.deleteProduct = async (req, res) => {
@@ -226,6 +242,21 @@ exports.updateSellerChannel = async (req, res) => {
     }).exec();
   req.flash('success', `${product.code} has been updated and listed on ${product.seller_channels}.`);
   res.redirect('back');
+}
+
+exports.findGFPProduct = async (req, res) => {
+  axios.get('https://www.greenfarmparts.com/-p/jdzg900.htm')
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  res.render('searchProducts', {
+    title: `Search For: ${req.query.q}`,
+    query: req.query.q,
+    products
+  });
 }
 
 
